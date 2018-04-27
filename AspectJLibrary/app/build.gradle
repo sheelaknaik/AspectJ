@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+//apply plugin: 'com.archinamon.aspectj'
+apply plugin: 'com.archinamon.aspectj-provides'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    defaultConfig {
+
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "2.5"
+        android.libraryVariants.all { variant ->
+            def appName="Seclib"
+            variant.outputs.each { output ->
+                def newApkName = "${appName}-${output.baseName}-${versionName}.aar"
+                output.outputFileName = new File(output.outputFile.parent, newApkName)
+            }  
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+/*allprojects {
+    repositories {
+
+        jcenter()
+        mavenCentral()
+        maven { url "https://maven.google.com" }
+    }
+}*/
+
+/*buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath 'com.github.Archinamon:GradleAspectJ-Android:3.0.3'
+    }
+}*/
+
+ext.supportLibraryVersion="26.0.0-alpha1"
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    // compile 'org.aspectj:aspectjrt:1.8.8'
+    compile "com.android.support:design:$supportLibraryVersion"
+    //JobIntentService
+    compile 'com.android.support:support-compat:26.0.0'
+
+}
+
+
